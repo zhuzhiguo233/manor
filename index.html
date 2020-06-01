@@ -17,7 +17,7 @@
             <el-form ref="form" :model="form" label-position="top">
                 <el-form-item label="剩余时间">
                     <el-col :span="24">
-                        <el-time-picker v-model="form.time" placeholder="选择剩余时间" style="width: 100%;"
+                        <el-time-picker v-model="form.time" placeholder="选择剩余时间" style="width: 100%;" :editable="false"
                             value-format="HH:mm" format='HH:mm'>
                         </el-time-picker>
                     </el-col>
