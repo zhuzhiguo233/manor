@@ -37,8 +37,6 @@
                             :duration=3000>
                         </count-to>
                     </div>
-                    <!-- <count-to ref='example1' class='example1' separator=':' :start-val=startVal1 :end-val='endVal1' :duration=4000>
-                    </count-to> -->
                 </div>
             </div>
         </div>
@@ -78,7 +76,7 @@
 
                     var h = newTime.getHours() < 10 ? '0' + newTime.getHours() : newTime.getHours();
                     var m = newTime.getMinutes() < 10 ? '0' + newTime.getMinutes() : newTime.getMinutes();
-
+                    this.$refs.example1.start()
                     this.hoursEnd = h
                     this.minuteEnd = m
                     // this.showTime = h + ':' + m
