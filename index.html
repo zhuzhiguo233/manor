@@ -7,40 +7,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/vue-count-to.css">
     <link rel="shortcut icon" href="./manor.jpg">
 </head>
 
 <body>
 
-    <div id="app">
+    <div id="app" class="app">
         <div class="box">
-            <el-form ref="form" :model="form" label-position="top">
-                <el-form-item label="剩余时间">
-                    <el-col :span="24">
-                        <el-time-picker v-model="form.time" placeholder="选择剩余时间" style="width: 100%;" :editable="false"
-                            value-format="HH:mm" format='HH:mm' @change="timeChange">
-                        </el-time-picker>
-                    </el-col>
-                </el-form-item>
-            </el-form>
-            <div class="content">
-                <span>饲料预计吃完时间:</span>
-                <p>{{showTime}}</p>
+            <div class="contain">
+                <el-form ref="form" :model="form" label-position="top">
+                    <el-form-item label="剩余时间">
+                        <el-col :span="24">
+                            <el-time-picker v-model="form.time" placeholder="选择剩余时间" style="width: 80%;"
+                                :editable="false" value-format="HH:mm" format='HH:mm' @change="timeChange">
+                            </el-time-picker>
+                        </el-col>
+                    </el-form-item>
+                </el-form>
+                <div class="content">
+                    <span class="title">饲料预计吃完时间:</span>
+                    <!-- <p>{{showTime}}</p> -->
+                    <div class="countBox">
+                        <count-to ref='example1' class='example1' :start-val='hoursStart' :end-val='hoursEnd'
+                            :duration=3000>
+                        </count-to>
+                        <span style="font-size: 24px;font-weight: bold;">:</span>
+                        <count-to ref='example1' class='example1' :start-val='minuteStart' :end-val='minuteEnd'
+                            :duration=3000>
+                        </count-to>
+                    </div>
+                    <!-- <count-to ref='example1' class='example1' separator=':' :start-val=startVal1 :end-val='endVal1' :duration=4000>
+                    </count-to> -->
+                </div>
             </div>
         </div>
     </div>
+
     <script src="./js/vue.js"></script>
+    <script src="./js/vue-count-to.min.js"></script>
     <script src="./js/index.js"></script>
+
     <script>
-        new Vue({
-            el: '#app',
-            data: function () {
+        var Main = {
+            name: 'test',
+            data() {
                 return {
                     form: {
                         time: '00:00'
                     },
-                    showTime: '00:00'
+                    showTime: '00:00',
+                    hoursStart: 0,
+                    hoursEnd: 0,
+                    minuteStart: 0,
+                    minuteEnd: 0,
                 }
+            },
+            computed: {
             },
             methods: {
                 timeChange() {
@@ -56,11 +79,16 @@
                     var h = newTime.getHours() < 10 ? '0' + newTime.getHours() : newTime.getHours();
                     var m = newTime.getMinutes() < 10 ? '0' + newTime.getMinutes() : newTime.getMinutes();
 
-                    this.showTime = h + ':' + m
+                    this.hoursEnd = h
+                    this.minuteEnd = m
+                    // this.showTime = h + ':' + m
                 }
             },
-        })
+        };
+        var Ctor = Vue.extend(Main)
+        new Ctor().$mount('#app')
     </script>
+
     <style>
         * {
             margin: 0;
@@ -69,24 +97,62 @@
             border: none;
         }
 
+        .app {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+        }
+
         .box {
-            width: 20rem;
-            border: 1px dashed #ccc;
-            border-radius: 15px;
-            margin: 30px auto;
+            width: 24rem;
+            height: 100%;
+            margin: 0 auto;
             text-align: center;
-            padding: 20px;
+            background: url('./img/background.png') no-repeat;
+            background-repeat: no-repeat;
+            background-position: top center;
+            background-origin: content-box;
+            background-size: contain;
+            background-attachment: fixed;
+            position: relative;
         }
 
-        .content span {
-            margin-top: 20px;
-            font-size: 24px;
+        .contain {
+            width: 232px;
+            height: 194px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -121px;
+            margin-top: -97px;
         }
 
-        .content p {
-            margin-top: 20px;
+        .content title {
+            /* margin-top: 20px; */
             font-size: 24px;
-            font-weight: bold;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+        }
+
+        .countBox {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            color: #6E3613
+        }
+
+        .example1 {
+            color: #6E3613
+        }
+
+        .el-input__inner {
+            background-color: rgba(255, 255, 255, 0.8);
         }
     </style>
 </body>
