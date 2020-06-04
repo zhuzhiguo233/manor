@@ -2,4 +2,4 @@
 
 ## 使用技术
 
-*** element-ui + Vue ***
+***element-ui + Vue +vue-count-to***
